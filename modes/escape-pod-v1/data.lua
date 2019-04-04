@@ -1,35 +1,7 @@
 local Constants = require("constants")
-
+local modeFilePath = "modes/escape-pod-v1"
 data:extend(
     {
-        {
-            type = "technology",
-            name = "escape-pod",
-            icon_size = 128,
-            icon = "__base__/graphics/technology/demo/analyse-ship.png",
-            effects = {
-                {
-                    type = "nothing",
-                    effect_description = {"technology-modifier.espace-pod"}
-                }
-            },
-            prerequisites = {"space-science-pack"},
-            unit = {
-                count = 10000,
-                ingredients = {
-                    {"automation-science-pack", 1},
-                    {"logistic-science-pack", 1},
-                    {"chemical-science-pack", 1},
-                    {"production-science-pack", 1},
-                    {"utility-science-pack", 1},
-                    {"space-science-pack", 1}
-                },
-                time = 60
-            },
-            upgrade = true,
-            max_level = "infinite",
-            order = "c-b"
-        },
         {
             type = "item",
             name = "escape-pod",
@@ -86,9 +58,137 @@ data:extend(
         },
         {
             type = "technology",
+            name = "escape-pod-1",
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            effects = {
+                {
+                    type = "nothing",
+                    effect_description = {"technology-modifier.espace-pod"}
+                }
+            },
+            prerequisites = {"space-science-pack"},
+            unit = {
+                count = 5000,
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "escape-pod-2",
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            effects = {
+                {
+                    type = "nothing",
+                    effect_description = {"technology-modifier.espace-pod"}
+                }
+            },
+            prerequisites = {"escape-pod-1"},
+            unit = {
+                count = 5000,
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"chemical-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "escape-pod-3",
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            effects = {
+                {
+                    type = "nothing",
+                    effect_description = {"technology-modifier.espace-pod"}
+                }
+            },
+            prerequisites = {"escape-pod-2"},
+            unit = {
+                count = 5000,
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "escape-pod-4",
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            effects = {
+                {
+                    type = "nothing",
+                    effect_description = {"technology-modifier.espace-pod"}
+                }
+            },
+            prerequisites = {"escape-pod-3"},
+            unit = {
+                count = 5000,
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1},
+                    {"utility-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "escape-pod-5",
+            localised_name = {"technology-name.esape-pod-shiny-bit"},
+            localised_description = {"technology-description.esape-pod-shiny-bit"},
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            effects = {
+                {
+                    type = "nothing",
+                    effect_description = {"technology-modifier.espace-pod"}
+                }
+            },
+            prerequisites = {"escape-pod-4"},
+            unit = {
+                count = 1000,
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1},
+                    {"utility-science-pack", 1},
+                    {"space-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            max_level = "infinite",
+            order = "zzz"
+        },
+        {
+            type = "technology",
             name = "recruit-workforce-member",
             icon_size = 114,
-            icon = Constants.AssetModName .. "/graphics/technology/recruit-workforce-member.png",
+            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
             prerequisites = {"space-science-pack"},
             unit = {
                 count_formula = "2^L*5000",
@@ -104,32 +204,28 @@ data:extend(
             },
             upgrade = true,
             max_level = "infinite",
-            order = "c-c"
+            order = "zzz"
         }
     }
 )
 
 local defaultStyle = data.raw["gui-style"]["default"]
-
 defaultStyle.muppet_padded_horizontal_flow = {
     type = "horizontal_flow_style",
     left_padding = 4,
     top_padding = 4
 }
-
 defaultStyle.muppet_padded_vertical_flow = {
     type = "vertical_flow_style",
     left_padding = 4,
     top_padding = 4
 }
-
 defaultStyle.muppet_mod_button_sprite = {
     type = "button_style",
     width = 36,
     height = 36,
     scalable = true
 }
-
 --same size as a button
 defaultStyle.muppet_button_sprite = {
     type = "button_style",
@@ -137,13 +233,11 @@ defaultStyle.muppet_button_sprite = {
     height = 42,
     scalable = true
 }
-
 defaultStyle.muppet_gui_frame = {
     type = "frame_style",
     left_padding = 4,
     top_padding = 4
 }
-
 defaultStyle.muppet_padded_table = {
     type = "table_style",
     top_padding = 5,
@@ -151,7 +245,6 @@ defaultStyle.muppet_padded_table = {
     left_padding = 5,
     right_padding = 5
 }
-
 defaultStyle.muppet_padded_table_cell = {
     type = "label_style",
     top_padding = 5,
@@ -159,9 +252,12 @@ defaultStyle.muppet_padded_table_cell = {
     left_padding = 5,
     right_padding = 5
 }
-
 defaultStyle.muppet_small_button = {
     type = "button_style",
     padding = 2,
     font = "default"
+}
+defaultStyle.muppet_large_text = {
+    type = "label_style",
+    font = "default-large"
 }

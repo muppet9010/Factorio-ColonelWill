@@ -1,10 +1,20 @@
 local modeFilePath = "modes/escape-pod-v1"
 local Commands = require("utility/commands")
 local Utils = require("utility/utils")
+local Constants = require("constants")
 local Gui = require(modeFilePath .. "/gui.lua")
 
 local function EscapePodAddPart(command)
-    local value = command.parameter
+    local rawValue = command.parameter
+    local value = tonumber(rawValue)
+    if type(value) ~= "number" then
+        game.print("escape_pod_add_level value '" .. rawValue .. "' not a valid number")
+        return
+    end
+    game.print("escape_pod_add_level added " .. value .. " levels")
+    global.Mod.escapeTechLevelsRequired = global.Mod.escapeTechLevelsRequired + value
+    global.Mod.escapeTechLevelsAdded = global.Mod.escapeTechLevelsAdded + value
+    Gui.RefreshAll()
 end
 
 local function OnRocketLaunched(event)
@@ -22,26 +32,40 @@ end
 
 local function OnResearchFinished(event)
     local technology = event.research
-    if technology.name ~= "recruit-workforce-member" then
-        return
+    if technology.name == "recruit-workforce-member" then
+        global.Mod.recruitedWorkforceCount = technology.level - 1
+        Gui.RefreshAll()
+    elseif string.find(technology.name, "escape-pod", 0, true) and not global.Mod.escapeTechCompleted then
+        global.Mod.escapeTechLevelsDone = global.Mod.escapeTechLevelsDone + (technology.research_unit_count / 1000)
+        local force = technology.force
+        if global.Mod.escapeTechLevelsDone == global.Mod.escapeTechLevelsRequired then
+            force.recipes["escape-pod"].enabled = true
+            technology.enabled = false
+            game.print("Escape Pod Unlocked", Constants.Color.green)
+            global.Mod.escapeTechCompleted = true
+        elseif technology.name == "escape-pod-5" then
+            force.current_research = technology.name
+        end
+        Gui.RefreshAll()
     end
-    global.Mod.recruitedWorkforceCount = technology.level - 1
-    Gui.RefreshAll()
 end
 
-local function OnPlayerJoined(event)
-    local player = game.get_player(event.player_index)
-    Gui.OnPlayerJoined(player)
+local function PlayersChanged()
+    Gui.RefreshAll()
 end
 
 local function CreateGlobals()
     global.Mod = global.Mod or {}
     global.Mod.gameFinished = global.Mod.gameFinished or false
     global.Mod.recruitedWorkforceCount = global.Mod.recruitedWorkforceCount or 0
+    global.Mod.escapeTechLevelsRequired = global.Mod.escapeTechLevelsRequired or 20
+    global.Mod.escapeTechLevelsDone = global.Mod.escapeTechLevelsDone or 0
+    global.Mod.escapeTechLevelsAdded = global.Mod.escapeTechLevelsAdded or 0
+    global.Mod.escapeTechCompleted = global.Mod.escapeTechCompleted or false
 end
 
 local function OnLoad()
-    Commands.Register("escape_pod_add_cost", {"api-description.escape_pod_add_cost"}, EscapePodAddPart, true)
+    Commands.Register("escape_pod_add_level", {"api-description.escape_pod_add_level"}, EscapePodAddPart, true)
     Utils.DisableSiloScript()
 end
 
@@ -55,4 +79,5 @@ script.on_load(OnLoad)
 script.on_configuration_changed(OnStartup)
 script.on_event(defines.events.on_rocket_launched, OnRocketLaunched)
 script.on_event(defines.events.on_research_finished, OnResearchFinished)
-script.on_event(defines.events.on_player_joined_game, OnPlayerJoined)
+script.on_event(defines.events.on_player_joined_game, PlayersChanged)
+script.on_event(defines.events.on_player_left_game, PlayersChanged)
