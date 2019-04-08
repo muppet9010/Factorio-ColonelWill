@@ -1,13 +1,13 @@
 {
     "name": "colonel_will",
-    "version": "17.0.0",
+    "version": "17.0.1",
     "title": "Colonel Will",
     "author": "Muppet9010",
     "contact": "",
     "homepage": "https://mods.factorio.com/mod/colonel_will",
     "factorio_version": "0.17",
     "dependencies": [
-        "base >= 0.17"
+        "base >= 0.17.26"
     ],
     "description": "Streamer ColonelWill server mod"
 }

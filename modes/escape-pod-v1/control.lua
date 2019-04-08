@@ -44,7 +44,16 @@ local function OnResearchFinished(event)
             game.print("Escape Pod Unlocked", Constants.Color.green)
             global.Mod.escapeTechCompleted = true
         elseif technology.name == "escape-pod-5" then
-            force.current_research = technology.name
+            local alreadyQueued = false
+            for _, queuedResearch in pairs(force.research_queue) do
+                if queuedResearch.name == technology.name then
+                    alreadyQueued = true
+                    break
+                end
+            end
+            if not alreadyQueued then
+                force.add_research(technology.name)
+            end
         end
         Gui.RefreshAll()
     end
