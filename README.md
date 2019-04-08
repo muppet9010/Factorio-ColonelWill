@@ -6,7 +6,7 @@ A mod for streamer ColonelWill's server. Includes a number of distinct modes.
 Escape Pod v1
 -----------
 
-- Adds multiple expensive escape pod part technologys to unlock the Escape Pod. Starts with 4 core technologoes totalling 20k pots.
+- Adds multiple expensive escape pod part technology to unlock the Escape Pod. Starts with 4 core technologies totalling 20k pots.
 - Adds a command to increase the number of additional escape pod shiny part (1k pot) technologies that must be researched to unlock the escape pod recipe: escape_pod_add_level [NUMBER OF LEVELS]
 - Adds an escape pod that can only be used in a rocket and lets you ride in it. Costs the same as a satellite. Must be unlocked through research.
 - Win condition is only when an escape pod is launched in a rocket.
