@@ -67,7 +67,7 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"space-science-pack"},
+            prerequisites = {"logistic-science-pack"},
             unit = {
                 count = 5000,
                 ingredients = {
@@ -90,7 +90,7 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-1"},
+            prerequisites = {"escape-pod-1", "chemical-science-pack"},
             unit = {
                 count = 5000,
                 ingredients = {
@@ -114,7 +114,7 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-2"},
+            prerequisites = {"escape-pod-2", "production-science-pack"},
             unit = {
                 count = 5000,
                 ingredients = {
@@ -139,7 +139,7 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-3"},
+            prerequisites = {"escape-pod-3", "utility-science-pack"},
             unit = {
                 count = 5000,
                 ingredients = {
@@ -167,7 +167,7 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-4"},
+            prerequisites = {"escape-pod-4", "space-science-pack"},
             unit = {
                 count = 1000,
                 ingredients = {
@@ -189,12 +189,13 @@ data:extend(
             name = "recruit-workforce-member",
             icon_size = 114,
             icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
-            prerequisites = {"space-science-pack"},
+            prerequisites = {"space-science-pack", "military-science-pack"},
             unit = {
                 count_formula = "2^L*5000",
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
                     {"chemical-science-pack", 1},
                     {"production-science-pack", 1},
                     {"utility-science-pack", 1},

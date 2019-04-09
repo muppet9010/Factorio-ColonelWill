@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 17.0.2
+Date: 2019-04-09
+  Features:
+  Changes:
+    - Escape Pod v1 - Escape Pod Core Parts technologies can be researched when their pre-req science packs are researched. Previously all required space science to have been already researched.
+  Bugfixes:
+    - Escape Pod v1 - Recruit Workforce Member technology requires military packs to make it all packs.
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 17.0.1
 Date: 2019-04-08
   Features:
@@ -6,8 +15,8 @@ Date: 2019-04-08
     - Dependency set to be Factorio Base mod 0.17.26. Previous versions compliant with 0.17.25 and below.
   Bugfixes:
   Info:
-    - Escape Pod v1 - Clarification on auto research of infinite escape pod research.
-    - Escape Pod v1 - Compliant with 0.17.26 research API changes. 
+    - Escape Pod v1 - Readme - Clarification on auto research of infinite escape pod research.
+    - Escape Pod v1 - Compliant with 0.17.26 research API changes.
 ---------------------------------------------------------------------------------------------------
 Version: 17.0.0
 Date: 2019-04-02
