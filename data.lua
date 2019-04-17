@@ -1,6 +1,1 @@
-local mode = settings.startup["colonelwill_mode"].value
-if mode == "none" then
-    return
-else
-    require("modes/" .. mode .. "/data")
-end
+require("modes/escape-pod-v1/data")

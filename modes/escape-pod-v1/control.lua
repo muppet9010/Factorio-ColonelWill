@@ -4,6 +4,10 @@ local Utils = require("utility/utils")
 local Constants = require("constants")
 local Gui = require(modeFilePath .. "/gui.lua")
 
+if settings.startup["colonelwill_mode"].value ~= "escape-pod-v1" then
+    return
+end
+
 local function EscapePodAddPart(command)
     local rawValue = command.parameter
     local value = tonumber(rawValue)

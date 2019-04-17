@@ -1,5 +1,10 @@
 local Constants = require("constants")
 local modeFilePath = "modes/escape-pod-v1"
+
+if settings.startup["colonelwill_mode"].value ~= "escape-pod-v1" then
+    return
+end
+
 data:extend(
     {
         {
