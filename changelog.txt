@@ -4,6 +4,7 @@ Date: 2019-05-01
   Features:
     - Added Escape Pod v2
   Changes:
+    - Dependency set to be Factorio Base mod 0.17.35.
   Bugfixes:
   Info:
 ---------------------------------------------------------------------------------------------------

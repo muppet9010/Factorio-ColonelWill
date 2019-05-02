@@ -1,5 +1,5 @@
 local Constants = require("constants")
-local modeFilePath = "modes/escape-pod-v1"
+local modeFilePath = "modes/escape-pod-v2"
 
 if settings.startup["colonelwill_mode"].value ~= "escape-pod-v2" then
     return
@@ -9,17 +9,17 @@ data:extend(
     {
         {
             type = "item",
-            name = "escape-pod",
+            name = "escape-pod-v2",
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             icon_size = 128,
             subgroup = "intermediate-product",
             order = "m[satellite]a",
-            place_result = "escape-pod",
+            place_result = "escape-pod-v2",
             stack_size = 1
         },
         {
             type = "recipe",
-            name = "escape-pod",
+            name = "escape-pod-v2",
             energy_required = 5,
             enabled = false,
             category = "crafting",
@@ -32,14 +32,15 @@ data:extend(
                 {"rocket-fuel", 50},
                 {"raw-fish", 1}
             },
-            result = "escape-pod",
+            result = "escape-pod-v2",
             requester_paste_multiplier = 1
         },
         {
             type = "car",
-            name = "escape-pod",
+            name = "escape-pod-v2",
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             icon_size = 128,
+            flags = {"hide-alt-info"},
             collision_box = {{-1, -1}, {1, 1}},
             collision_mask = {"ground-tile", "water-tile"},
             weight = 1,
@@ -54,7 +55,7 @@ data:extend(
                 filename = "__core__/graphics/empty.png"
             },
             effectivity = 0.6,
-            consumption = "1kW",
+            consumption = "0kW",
             rotation_speed = 0,
             energy_source = {
                 type = "void"
@@ -63,7 +64,7 @@ data:extend(
         },
         {
             type = "technology",
-            name = "escape-pod-1",
+            name = "escape-pod-v2-1",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             effects = {
@@ -74,7 +75,7 @@ data:extend(
             },
             prerequisites = {"logistic-science-pack"},
             unit = {
-                count = 5000,
+                count = "1000",
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1}
@@ -82,11 +83,12 @@ data:extend(
                 time = 60
             },
             upgrade = true,
+            max_level = 5,
             order = "zzz"
         },
         {
             type = "technology",
-            name = "escape-pod-2",
+            name = "escape-pod-v2-6",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             effects = {
@@ -95,22 +97,24 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-1", "chemical-science-pack"},
+            prerequisites = {"escape-pod-v2-1", "chemical-science-pack", "military-science-pack"},
             unit = {
-                count = 5000,
+                count = 1000,
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
                     {"chemical-science-pack", 1}
                 },
                 time = 60
             },
             upgrade = true,
+            max_level = 10,
             order = "zzz"
         },
         {
             type = "technology",
-            name = "escape-pod-3",
+            name = "escape-pod-v2-11",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             effects = {
@@ -119,23 +123,25 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-2", "production-science-pack"},
+            prerequisites = {"escape-pod-v2-6", "production-science-pack"},
             unit = {
-                count = 5000,
+                count = 1000,
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
                     {"chemical-science-pack", 1},
                     {"production-science-pack", 1}
                 },
                 time = 60
             },
             upgrade = true,
+            max_level = 15,
             order = "zzz"
         },
         {
             type = "technology",
-            name = "escape-pod-4",
+            name = "escape-pod-v2-16",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             effects = {
@@ -144,12 +150,13 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-3", "utility-science-pack"},
+            prerequisites = {"escape-pod-v2-11", "utility-science-pack"},
             unit = {
-                count = 5000,
+                count = 1000,
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
                     {"chemical-science-pack", 1},
                     {"production-science-pack", 1},
                     {"utility-science-pack", 1}
@@ -157,13 +164,12 @@ data:extend(
                 time = 60
             },
             upgrade = true,
+            max_level = 20,
             order = "zzz"
         },
         {
             type = "technology",
-            name = "escape-pod-5",
-            localised_name = {"technology-name.esape-pod-shiny-bit"},
-            localised_description = {"technology-description.esape-pod-shiny-bit"},
+            name = "escape-pod-v2-21",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             effects = {
@@ -172,31 +178,9 @@ data:extend(
                     effect_description = {"technology-modifier.espace-pod"}
                 }
             },
-            prerequisites = {"escape-pod-4", "space-science-pack"},
+            prerequisites = {"escape-pod-v2-16", "space-science-pack"},
             unit = {
                 count = 1000,
-                ingredients = {
-                    {"automation-science-pack", 1},
-                    {"logistic-science-pack", 1},
-                    {"chemical-science-pack", 1},
-                    {"production-science-pack", 1},
-                    {"utility-science-pack", 1},
-                    {"space-science-pack", 1}
-                },
-                time = 60
-            },
-            upgrade = true,
-            max_level = "infinite",
-            order = "zzz"
-        },
-        {
-            type = "technology",
-            name = "recruit-workforce-member",
-            icon_size = 114,
-            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
-            prerequisites = {"space-science-pack", "military-science-pack"},
-            unit = {
-                count_formula = "2^L*5000",
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1},
@@ -210,6 +194,110 @@ data:extend(
             },
             upgrade = true,
             max_level = "infinite",
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "recruit-workforce-member-v2-1",
+            icon_size = 114,
+            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
+            prerequisites = {"logistic-science-pack"},
+            unit = {
+                count_formula = "5000",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            max_level = 1,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "recruit-workforce-member-v2-2",
+            icon_size = 114,
+            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
+            prerequisites = {"recruit-workforce-member-v2-1", "chemical-science-pack", "military-science-pack"},
+            unit = {
+                count_formula = "5000",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
+                    {"chemical-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            max_level = 2,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "recruit-workforce-member-v2-3",
+            icon_size = 114,
+            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
+            prerequisites = {"recruit-workforce-member-v2-2", "production-science-pack"},
+            unit = {
+                count_formula = "5000",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            max_level = 3,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "recruit-workforce-member-v2-4",
+            icon_size = 114,
+            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
+            prerequisites = {"recruit-workforce-member-v2-3", "utility-science-pack"},
+            unit = {
+                count_formula = "5000",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1},
+                    {"utility-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            max_level = 4,
+            order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "recruit-workforce-member-v2-5",
+            icon_size = 114,
+            icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
+            prerequisites = {"recruit-workforce-member-v2-4", "space-science-pack"},
+            unit = {
+                count_formula = "2^L*2500",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1},
+                    {"utility-science-pack", 1},
+                    {"space-science-pack", 1}
+                },
+                time = 60
+            },
+            upgrade = true,
+            max_level = "10",
             order = "zzz"
         }
     }
