@@ -162,8 +162,8 @@ data:extend(
         {
             type = "technology",
             name = "escape-pod-5",
-            localised_name = {"technology-name.esape-pod-shiny-bit"},
-            localised_description = {"technology-description.esape-pod-shiny-bit"},
+            localised_name = {"technology-name.escape-pod-shiny-bit"},
+            localised_description = {"technology-description.escape-pod-shiny-bit"},
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
             effects = {
