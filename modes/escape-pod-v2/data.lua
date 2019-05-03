@@ -284,7 +284,7 @@ data:extend(
             icon = Constants.AssetModName .. "/" .. modeFilePath .. "/graphics/technology/recruit-workforce-member.png",
             prerequisites = {"recruit-workforce-member-v2-4", "space-science-pack"},
             unit = {
-                count_formula = "2^L*2500",
+                count_formula = "2^(L-4)*2500",
                 ingredients = {
                     {"automation-science-pack", 1},
                     {"logistic-science-pack", 1},
