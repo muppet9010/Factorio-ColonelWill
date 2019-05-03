@@ -1,0 +1,21 @@
+Test workforce and escape pod researches
+----------------------------------------------------------
+
+/c
+game.forces["player"].technologies["recruit-workforce-member-v2-1"].researched = true --[[ 0 ]]
+
+game.forces["player"].technologies["escape-pod-v2-w1-1"].level = 2
+game.forces["player"].technologies["recruit-workforce-member-v2-2"].researched = true  --[[ 1 ]]
+
+game.forces["player"].technologies["escape-pod-v2-w2-1"].level = 3
+game.forces["player"].technologies["recruit-workforce-member-v2-3"].researched = true --[[ 2 ]]
+
+game.forces["player"].technologies["escape-pod-v2-w3-1"].level = 5
+game.forces["player"].technologies["escape-pod-v2-w3-1"].researched = true
+game.forces["player"].technologies["recruit-workforce-member-v2-4"].researched = true --[[ 5 ]]
+
+game.forces["player"].technologies["escape-pod-v2-w4-6"].level = 7
+game.forces["player"].technologies["recruit-workforce-member-v2-5"].level = 6 --[[ 6 ]]
+
+game.forces["player"].technologies["escape-pod-v2-w5-6"].level = 8
+game.forces["player"].technologies["recruit-workforce-member-v2-5"].level = 7 --[[ 7 ]]

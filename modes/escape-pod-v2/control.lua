@@ -3,6 +3,7 @@ local Commands = require("utility/commands")
 local Utils = require("utility/utils")
 local Constants = require("constants")
 local Gui = require(modeFilePath .. "/gui.lua")
+local Logging = require("utility/logging")
 
 if settings.startup["colonelwill_mode"].value ~= "escape-pod-v2" then
     return
@@ -33,27 +34,82 @@ local function OnRocketLaunched(event)
     end
 end
 
+local function WorkforceResearchCompleted(newLevel)
+    local debug = false
+    global.Mod.recruitedWorkforceCount = newLevel
+    if global.Mod.escapeTechCompleted then
+        return
+    end
+    local oldLevel = newLevel - 1
+    local baseName = "escape-pod-v2"
+    local oldTechnologyNameRange = baseName .. "-w" .. oldLevel .. "-"
+    local maxTechResearchedLevel = 0
+    for _, tech in pairs(game.forces["player"].technologies) do
+        local s, e = string.find(tech.name, oldTechnologyNameRange, 0, true)
+        if s ~= nil then
+            local nameBaseLevel = tonumber(string.sub(tech.name, e + 1))
+            local researchedLevel = tech.level
+            Logging.LogPrint(researchedLevel .. " - " .. nameBaseLevel, debug)
+            if researchedLevel > nameBaseLevel then
+                if not tech.researched then
+                    researchedLevel = researchedLevel - 1
+                end
+                Logging.LogPrint(tech.name .. ": " .. researchedLevel .. " - " .. tostring(tech.researched), debug)
+                if researchedLevel > maxTechResearchedLevel then
+                    maxTechResearchedLevel = researchedLevel
+                end
+            end
+            tech.level = nameBaseLevel
+            tech.researched = false
+            tech.enabled = false
+        end
+    end
+    Logging.LogPrint("maxTechResearchedLevel: " .. maxTechResearchedLevel, debug)
+    local newTechnologyNameRange = baseName .. "-w" .. newLevel .. "-"
+    for _, tech in pairs(game.forces["player"].technologies) do
+        local s, e = string.find(tech.name, newTechnologyNameRange, 0, true)
+        if s ~= nil then
+            tech.enabled = true
+            local nameBaseLevel = tonumber(string.sub(tech.name, e + 1))
+            Logging.LogPrint(tech.name .. ": " .. tech.prototype.max_level .. " - " .. nameBaseLevel, debug)
+            if maxTechResearchedLevel >= tech.prototype.max_level then
+                Logging.LogPrint("researched", debug)
+                tech.level = tech.prototype.max_level
+                tech.researched = true
+            elseif maxTechResearchedLevel >= nameBaseLevel then
+                Logging.LogPrint("level = " .. maxTechResearchedLevel, debug)
+                tech.level = maxTechResearchedLevel + 1
+            end
+        end
+    end
+end
+
 local function OnResearchFinished(event)
     local technology = event.research
     if string.find(technology.name, "recruit-workforce-member-v2", 0, true) then
-        game.print(technology.level)
         if technology.level == 10 and technology.researched then
-            global.Mod.recruitedWorkforceCount = 10
+            WorkforceResearchCompleted(10)
         elseif technology.level >= 5 then
-            global.Mod.recruitedWorkforceCount = technology.level - 1
+            WorkforceResearchCompleted(technology.level - 1)
         else
-            global.Mod.recruitedWorkforceCount = technology.level
+            WorkforceResearchCompleted(technology.level)
         end
         Gui.RefreshAll()
     elseif string.find(technology.name, "escape-pod-v2", 0, true) and not global.Mod.escapeTechCompleted then
-        global.Mod.escapeTechLevelsDone = technology.level - 1
+        local newTechLevel = technology.level
+        if not technology.researched then
+            newTechLevel = newTechLevel - 1
+        end
+        if newTechLevel > global.Mod.escapeTechLevelsDone then
+            global.Mod.escapeTechLevelsDone = newTechLevel
+        end
         local force = technology.force
         if global.Mod.escapeTechLevelsDone == global.Mod.escapeTechLevelsRequired then
             force.recipes["escape-pod-v2"].enabled = true
             technology.enabled = false
             game.print("Escape Pod Unlocked", Constants.Color.green)
             global.Mod.escapeTechCompleted = true
-        elseif technology.name == "escape-pod-v2-21" then
+        elseif string.find(technology.name, "escape%-pod%-v2%-w+%d%-21") then
             local alreadyQueued = false
             for _, queuedResearch in pairs(force.research_queue) do
                 if queuedResearch.name == technology.name then
@@ -76,7 +132,9 @@ end
 local function CreateGlobals()
     global.Mod = global.Mod or {}
     global.Mod.gameFinished = global.Mod.gameFinished or false
-    global.Mod.recruitedWorkforceCount = global.Mod.recruitedWorkforceCount or 0
+    if global.Mod.recruitedWorkforceCount == nil then
+        WorkforceResearchCompleted(0)
+    end
     global.Mod.escapeTechLevelsRequired = global.Mod.escapeTechLevelsRequired or 25
     global.Mod.escapeTechLevelsDone = global.Mod.escapeTechLevelsDone or 0
     global.Mod.escapeTechCompleted = global.Mod.escapeTechCompleted or false

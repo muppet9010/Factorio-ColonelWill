@@ -1,5 +1,6 @@
 local Constants = require("constants")
 local modeFilePath = "modes/escape-pod-v2"
+local Utils = require("utility/utils")
 
 if settings.startup["colonelwill_mode"].value ~= "escape-pod-v2" then
     return
@@ -67,10 +68,13 @@ data:extend(
             name = "escape-pod-v2-1",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            localised_name = {"technology-name.escape-pod-v2"},
+            localised_description = {"technology-description.escape-pod-v2"},
+            enabled = false,
             effects = {
                 {
                     type = "nothing",
-                    effect_description = {"technology-modifier.espace-pod"}
+                    effect_description = {"technology-modifier.espace-pod-v2"}
                 }
             },
             prerequisites = {"logistic-science-pack"},
@@ -91,6 +95,9 @@ data:extend(
             name = "escape-pod-v2-6",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            localised_name = {"technology-name.escape-pod-v2"},
+            localised_description = {"technology-description.escape-pod-v2"},
+            enabled = false,
             effects = {
                 {
                     type = "nothing",
@@ -117,6 +124,9 @@ data:extend(
             name = "escape-pod-v2-11",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            localised_name = {"technology-name.escape-pod-v2"},
+            localised_description = {"technology-description.escape-pod-v2"},
+            enabled = false,
             effects = {
                 {
                     type = "nothing",
@@ -144,6 +154,9 @@ data:extend(
             name = "escape-pod-v2-16",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            localised_name = {"technology-name.escape-pod-v2"},
+            localised_description = {"technology-description.escape-pod-v2"},
+            enabled = false,
             effects = {
                 {
                     type = "nothing",
@@ -172,6 +185,9 @@ data:extend(
             name = "escape-pod-v2-21",
             icon_size = 128,
             icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            localised_name = {"technology-name.escape-pod-v2"},
+            localised_description = {"technology-description.escape-pod-v2"},
+            enabled = false,
             effects = {
                 {
                     type = "nothing",
@@ -302,6 +318,32 @@ data:extend(
         }
     }
 )
+
+local function DuplicateEscapePodTechnologyForWorkforceTechLevel(technologyLevel, workforceLevel)
+    local baseName = "escape-pod-v2"
+    local techNameToClone = baseName .. "-" .. technologyLevel
+    local newTech = Utils.DeepCopy(data.raw["technology"][techNameToClone])
+    newTech.name = baseName .. "-w" .. workforceLevel .. "-" .. technologyLevel
+    for i, preReq in pairs(newTech.prerequisites) do
+        local s, e = string.find(preReq, baseName, 0, true)
+        if s ~= nil then
+            local preReqLevel = string.sub(preReq, e + 2)
+            newTech.prerequisites[i] = baseName .. "-w" .. workforceLevel .. "-" .. preReqLevel
+        end
+    end
+    newTech.unit.count = newTech.unit.count + (newTech.unit.count * workforceLevel)
+    data:extend({newTech})
+end
+local function DuplicateEscapePodTechnologiesForWorkforceTechLevel(workforceLevel)
+    DuplicateEscapePodTechnologyForWorkforceTechLevel(1, workforceLevel)
+    DuplicateEscapePodTechnologyForWorkforceTechLevel(6, workforceLevel)
+    DuplicateEscapePodTechnologyForWorkforceTechLevel(11, workforceLevel)
+    DuplicateEscapePodTechnologyForWorkforceTechLevel(16, workforceLevel)
+    DuplicateEscapePodTechnologyForWorkforceTechLevel(21, workforceLevel)
+end
+for i = 0, 10 do
+    DuplicateEscapePodTechnologiesForWorkforceTechLevel(i)
+end
 
 local defaultStyle = data.raw["gui-style"]["default"]
 defaultStyle.muppet_padded_horizontal_flow = {
