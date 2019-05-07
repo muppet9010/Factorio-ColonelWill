@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 17.0.5
+Date: 2019-05-07
+  Features:
+  Changes:
+  Bugfixes:
+  Info:
+    - Escape Pod v2 - change to workforce unlock technology and gui flavour texts.
+---------------------------------------------------------------------------------------------------
 Version: 17.0.4
 Date: 2019-05-01
   Features:
