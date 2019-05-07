@@ -6,6 +6,7 @@ Date: 2019-05-07
   Bugfixes:
   Info:
     - Escape Pod v2 - change to workforce unlock technology and gui flavour texts.
+    - Escape Pod v2 - make GUI text more prominent on stream.
 ---------------------------------------------------------------------------------------------------
 Version: 17.0.4
 Date: 2019-05-01
