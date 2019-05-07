@@ -148,6 +148,7 @@ end
 local function OnStartup()
     CreateGlobals()
     OnLoad()
+    Gui.RefreshAll()
 end
 
 script.on_init(OnStartup)
