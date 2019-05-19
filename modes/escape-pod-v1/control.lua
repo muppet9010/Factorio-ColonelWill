@@ -45,7 +45,7 @@ local function OnResearchFinished(event)
         if global.Mod.escapeTechLevelsDone == global.Mod.escapeTechLevelsRequired then
             force.recipes["escape-pod"].enabled = true
             technology.enabled = false
-            game.print("Escape Pod Unlocked", Constants.Color.green)
+            game.print("Escape Pod Unlocked", {r = 0.09, g = 0.7, b = 0, a = 1})
             global.Mod.escapeTechCompleted = true
         elseif technology.name == "escape-pod-5" then
             local alreadyQueued = false
