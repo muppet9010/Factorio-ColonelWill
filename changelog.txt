@@ -2,7 +2,7 @@
 Version: 17.0.6
 Date: 2019-05-19
   Features:
-    - Added Test Colonel Will's Spaceship mode
+    - Added Investigate Spaceship Crash Cause mode
   Changes:
   Bugfixes:
   Info:

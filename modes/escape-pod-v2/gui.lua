@@ -14,7 +14,7 @@ function Gui.CreateGui(player)
     local escapePodFrame = guiFlow.add {type = "frame", name = "colonelwill-escape-pod-frame", direction = "vertical", style = "muppet_padded_frame"}
     local techStatus = escapePodFrame.add {type = "label", name = "colonelwill-tech-label-", caption = {"gui-caption.colonelwill-tech-label-v2", global.Mod.escapeTechLevelsDone, global.Mod.escapeTechLevelsRequired}, style = "muppet_large_bold_text"}
     if global.Mod.escapeTechCompleted then
-        techStatus.style.font_color = Constants.Color.green
+        techStatus.style.font_color = {r = 0.09, g = 0.7, b = 0, a = 1}
     end
     escapePodFrame.add {type = "label", name = "colonelwill-workforce-recruited-label-v2", caption = {"gui-caption.colonelwill-recruited-label-v2", (#game.connected_players - 1), global.Mod.recruitedWorkforceCount}, tooltip = {"gui-tooltip.colonelwill-recruited-label-v2"}, style = "muppet_large_bold_text"}
 

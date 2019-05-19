@@ -3,11 +3,12 @@
 
 A mod for streamer ColonelWill's server. Includes a number of distinct modes which are not migratable.
 
-Test Colonel Will's Spaceship
+Investigate Spaceship Crash Cause
 ===================
 
 - Tested with Factorio 0.17.41
--
+- Add 7 tiers of expensive technology that unlock a test module. Each module is very expensive.
+- Each of the 7 test modules must be launched in to space in order to win.
 
 Escape Pod v2
 ==============
