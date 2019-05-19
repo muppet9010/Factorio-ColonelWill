@@ -13,6 +13,18 @@ end
 function Gui.CreateGui(player)
     GUIUtil.CreatePlayersElementReferenceStorage(player.index)
     local statusFrame = GUIUtil.AddElement({parent = player.gui.left, name = "status", type = "frame", direction = "vertical", style = "muppet_margin_frame"}, true)
+    statusFrame.style.width = 300
+
+    local titleFlow = GUIUtil.AddElement({parent = statusFrame, name = "title", type = "flow", direction = "horizontal"}, false)
+    titleFlow.style.vertical_align = "center"
+    GUIUtil.AddElement({parent = titleFlow, name = "title", type = "label", caption = {"gui-caption.test-spaceship-v1-status-title"}, style = "muppet_large_bold_text"}, false)
+    local infoButtonFlow = GUIUtil.AddElement({parent = titleFlow, name = "info", type = "flow", direction = "vertical"}, false)
+    infoButtonFlow.style.horizontally_stretchable = true
+    infoButtonFlow.style.horizontal_align = "right"
+    local infoButton = GUIUtil.AddElement({parent = infoButtonFlow, name = "info", type = "sprite-button", sprite = "test-spaceship-v1-info-icon"}, false)
+    infoButton.style.height = 24
+    infoButton.style.width = 24
+
     local statusTable = GUIUtil.AddElement({parent = statusFrame, name = "status", type = "table", column_count = 2, style = "muppet_padded_table"}, false)
     for stageCount = 1, maxTestLevel do
         Gui.CreateStatusStage(statusTable, stageCount)
@@ -38,12 +50,14 @@ function Gui.GuiClickedEvent(eventData)
         Gui.CloseWelcomePlayer(player)
     elseif clickedElement.name == GUIUtil.GenerateName("won", "button") then
         Gui.CloseWonPlayer(player)
+    elseif clickedElement.name == GUIUtil.GenerateName("info", "sprite-button") then
+        Gui.ShowMessages(player)
     end
 end
 
 function Gui.CreateStatusStage(statusTable, stageCount)
-    GUIUtil.AddElement({parent = statusTable, name = "statusStageName" .. stageCount, type = "label", caption = {"item-name.test-spaceship-v1-" .. stageCount}}, false)
-    local stateElm = GUIUtil.AddElement({parent = statusTable, name = "statusStageState" .. stageCount, type = "label", caption = ""}, true)
+    GUIUtil.AddElement({parent = statusTable, name = "statusStageName" .. stageCount, type = "label", caption = {"item-name.test-spaceship-v1-" .. stageCount}, style = "muppet_bold_text"}, false)
+    local stateElm = GUIUtil.AddElement({parent = statusTable, name = "statusStageState" .. stageCount, type = "label", caption = "", style = "muppet_bold_text"}, true)
     stateElm.style.left_padding = 10
 end
 
@@ -62,9 +76,18 @@ function Gui.UpdatePlayer(player)
     end
 end
 
+function Gui.ShowMessages(player)
+    local id = player.index
+    global.PlayersWelcomeClosed[id] = false
+    global.PlayersWonClosed[id] = false
+
+    Gui.CreateWelcomePlayer(player)
+    Gui.CreateWonPlayer(player)
+end
+
 function Gui.CreateWelcomePlayer(player)
     local id = player.index
-    if global.PlayersWelcomeClosed[id] == nil or not global.PlayersWelcomeClosed then
+    if (global.PlayersWelcomeClosed[id] == nil or not global.PlayersWelcomeClosed[id]) and (GUIUtil.GetElementFromPlayersReferenceStorage(id, "welcome", "frame") == nil) then
         global.PlayersWelcomeClosed[id] = false
         local frame = GUIUtil.AddElement({parent = player.gui.left, name = "welcome", type = "frame", direction = "vertical", style = "muppet_margin_frame"}, true)
         local message = GUIUtil.AddElement({parent = frame, name = "welcome", type = "label", caption = {"gui-caption.test-spaceship-v1-welcome"}}, false)
@@ -83,7 +106,7 @@ end
 
 function Gui.CreateWonPlayer(player)
     local id = player.index
-    if global.gameFinished and (global.PlayersWonClosed[id] == nil or not global.PlayersWonClosed) then
+    if (global.gameFinished) and (global.PlayersWonClosed[id] == nil or not global.PlayersWonClosed[id]) and (GUIUtil.GetElementFromPlayersReferenceStorage(id, "won", "frame") == nil) then
         global.PlayersWonClosed[id] = false
         local frame = GUIUtil.AddElement({parent = player.gui.left, name = "won", type = "frame", direction = "vertical", style = "muppet_margin_frame"}, true)
         local message = GUIUtil.AddElement({parent = frame, name = "won", type = "label", caption = {"gui-caption.test-spaceship-v1-won"}}, false)

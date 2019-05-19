@@ -7,8 +7,10 @@ Investigate Spaceship Crash Cause
 ===================
 
 - Tested with Factorio 0.17.41
-- Add 7 tiers of expensive technology that unlock a test module. Each module is very expensive.
-- Each of the 7 test modules must be launched in to space in order to win.
+- Add 7 tiers of expensive technology that unlock a test module. Each module is very expensive to make.
+- Each of the 7 test modules must be launched in to space for testing in order to win.
+- A mod GUI will show the current test module to be launched, the completed tests and future tests.
+- A welcome and win message will be shown to each player. They can be accessed via the Information button in the mod Gui.
 
 Escape Pod v2
 ==============

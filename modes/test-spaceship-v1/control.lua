@@ -48,26 +48,20 @@ local function CreateGlobals()
     global.currrentTestLevel = global.currrentTestLevel or 1
 end
 
-local function OnLoad()
-    Utils.DisableSiloScript()
-end
-
 local function OnStartup()
     Utils.DisableIntroMessage()
+    Utils.DisableWinOnRocket()
     CreateGlobals()
-    OnLoad()
     Gui.RefreshAll()
 end
 
 local function OnPlayerJoined(event)
     local player = game.get_player(event.player_index)
     Gui.RefreshPlayer(player)
-    Gui.CreateWelcomePlayer(player)
-    Gui.CreateWonPlayer(player)
+    Gui.ShowMessages(player)
 end
 
 script.on_init(OnStartup)
-script.on_load(OnLoad)
 script.on_configuration_changed(OnStartup)
 script.on_event(defines.events.on_rocket_launched, OnRocketLaunched)
 script.on_event(defines.events.on_player_joined_game, OnPlayerJoined)

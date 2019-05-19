@@ -350,3 +350,14 @@ data:extend(
         }
     }
 )
+
+data:extend(
+    {
+        {
+            type = "sprite",
+            name = "test-spaceship-v1-info-icon",
+            filename = "__base__/graphics/icons/info.png",
+            size = 33
+        }
+    }
+)
