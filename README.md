@@ -3,6 +3,12 @@
 
 A mod for streamer ColonelWill's server. Includes a number of distinct modes which are not migratable.
 
+Test Colonel Will's Spaceship
+===================
+
+- Tested with Factorio 0.17.41
+-
+
 Escape Pod v2
 ==============
 
