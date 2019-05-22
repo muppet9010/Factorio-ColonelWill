@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 17.0.8
+Date: 2019-05-22
+  Features:
+    - Investigate Spaceship Crash Cause - added technology to exterminate the biters
+  Changes:
+    - Investigate Spaceship Crash Cause - tweaks to end game
+  Bugfixes:
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 17.0.7
 Date: 2019-05-19
   Features:

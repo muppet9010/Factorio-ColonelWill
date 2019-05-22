@@ -19,22 +19,43 @@ local function OnRocketLaunched(event)
         local s, e = string.find(name, "test-spaceship-v1-", 0, true)
         if s ~= nil then
             local itemLevel = tonumber(string.sub(name, e + 1))
-            if itemLevel < global.currrentTestLevel then
-                PrintToAllPlayers({"message.test-spaceship-v1-already-tested-item", {"item-name.test-spaceship-v1-" .. itemLevel}}, {r = 1, g = 0, b = 0, a = 1})
-            elseif itemLevel == global.currrentTestLevel then
-                PrintToAllPlayers({"message.test-spaceship-v1-completed-tested-item", {"item-name.test-spaceship-v1-" .. itemLevel}}, {r = 0, g = 1, b = 0, a = 1})
-                global.currrentTestLevel = global.currrentTestLevel + 1
-                Gui.RefreshAll()
-            elseif itemLevel > global.currrentTestLevel then
-                PrintToAllPlayers({"message.test-spaceship-v1-too-early-tested-item", {"item-name.test-spaceship-v1-" .. itemLevel}}, {r = 1, g = 0, b = 0, a = 1})
-            end
-
-            if global.currrentTestLevel > 7 and not global.gameFinished then
-                global.gameFinished = true
-                for _, player in pairs(game.connected_players) do
-                    Gui.CreateWonPlayer(player)
+            if itemLevel ~= nil then
+                if itemLevel < global.currrentTestLevel then
+                    PrintToAllPlayers({"message.test-spaceship-v1-already-tested-item", {"item-name.test-spaceship-v1-" .. itemLevel}}, {r = 1, g = 0, b = 0, a = 1})
+                elseif itemLevel == global.currrentTestLevel then
+                    PrintToAllPlayers({"message.test-spaceship-v1-completed-tested-item", {"item-name.test-spaceship-v1-" .. itemLevel}}, {r = 0, g = 1, b = 0, a = 1})
+                    global.currrentTestLevel = global.currrentTestLevel + 1
+                    Gui.RefreshAll()
+                elseif itemLevel > global.currrentTestLevel then
+                    PrintToAllPlayers({"message.test-spaceship-v1-too-early-tested-item", {"item-name.test-spaceship-v1-" .. itemLevel}}, {r = 1, g = 0, b = 0, a = 1})
                 end
-                game.set_game_state {game_finished = true, player_won = true, can_continue = true, victorious_force = rocket.force}
+                if global.currrentTestLevel == 8 and not global.firstStageDone then
+                    global.firstStageDone = true
+                    Gui.RefreshAll()
+                    for _, player in pairs(game.connected_players) do
+                        Gui.CreateFirstStageDonePlayer(player)
+                    end
+                    game.forces["player"].technologies["test-spaceship-v1-exterminate-biters"].enabled = true
+                    game.forces["player"].technologies["test-spaceship-v1-8"].enabled = true
+                end
+                if global.currrentTestLevel == 9 and not global.gameFinished then
+                    global.gameFinished = true
+                    for _, player in pairs(game.connected_players) do
+                        Gui.CreateWonPlayer(player)
+                    end
+                    game.set_game_state {game_finished = true, player_won = true, can_continue = true, victorious_force = rocket.force}
+                end
+            else
+                if name == "test-spaceship-v1-exterminate-biters" then
+                    PrintToAllPlayers({"message.test-spaceship-v1-biters-eliminated"}, {r = 0, g = 1, b = 0, a = 1})
+                    local surface = game.surfaces[1]
+                    for key, entity in pairs(surface.find_entities_filtered({force = "enemy"})) do
+                        entity.destroy()
+                    end
+                    local mgs = surface.map_gen_settings
+                    mgs.autoplace_controls["enemy-base"].size = "none"
+                    surface.map_gen_settings = mgs
+                end
             end
         end
     end
@@ -42,7 +63,9 @@ end
 
 local function CreateGlobals()
     global.gameFinished = global.gameFinished or false
+    global.firstStageDone = global.firstStageDone or false
     global.PlayersWelcomeClosed = global.PlayersWelcomeClosed or {}
+    global.PlayersFirstStageDoneClosed = global.PlayersFirstStageDoneClosed or {}
     global.PlayersWonClosed = global.PlayersWonClosed or {}
     GUIUtil.CreateAllPlayersElementReferenceStorage()
     global.currrentTestLevel = global.currrentTestLevel or 1

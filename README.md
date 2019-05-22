@@ -11,6 +11,7 @@ Investigate Spaceship Crash Cause
 - Each of the 7 test modules must be launched in to space for testing in the correct order to win.
 - A mod GUI will show the current test module to be launched, the completed tests and future tests.
 - A welcome and win message will be shown to each player. They can be accessed via the Information button in the mod Gui.
+- A technology to exterminate the biters.
 
 Escape Pod v2
 ==============

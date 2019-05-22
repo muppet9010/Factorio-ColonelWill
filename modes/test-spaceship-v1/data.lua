@@ -68,6 +68,15 @@ data:extend(
             stack_size = 1
         },
         {
+            type = "item",
+            name = "test-spaceship-v1-8",
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            icon_size = 128,
+            subgroup = "intermediate-product",
+            order = "m[satellite]a",
+            stack_size = 1
+        },
+        {
             type = "recipe",
             name = "test-spaceship-v1-1",
             energy_required = 60,
@@ -150,6 +159,26 @@ data:extend(
                 {"speed-module-3", 1000}
             },
             result = "test-spaceship-v1-7",
+            requester_paste_multiplier = 1
+        },
+        {
+            type = "recipe",
+            name = "test-spaceship-v1-8",
+            energy_required = 60,
+            enabled = false,
+            category = "crafting",
+            ingredients = {
+                {"electric-engine-unit", 25000},
+                {"effectivity-module-3", 1000},
+                {"low-density-structure", 50000},
+                {"red-wire", 25000},
+                {"green-wire", 10000},
+                {"arithmetic-combinator", 25000},
+                {"decider-combinator", 10000},
+                {"constant-combinator", 5000},
+                {"power-switch", 1}
+            },
+            result = "test-spaceship-v1-8",
             requester_paste_multiplier = 1
         },
         {
@@ -347,6 +376,37 @@ data:extend(
             },
             upgrade = true,
             order = "zzz"
+        },
+        {
+            type = "technology",
+            name = "test-spaceship-v1-8",
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            localised_name = {"technology-name.test-spaceship-v1-8"},
+            localised_description = {"technology-description.test-spaceship-v1-8"},
+            enabled = false,
+            effects = {
+                {
+                    type = "unlock-recipe",
+                    recipe = "test-spaceship-v1-8"
+                }
+            },
+            prerequisites = {"space-science-pack", "test-spaceship-v1-7"},
+            unit = {
+                count = "500000",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"military-science-pack", 1},
+                    {"chemical-science-pack", 2},
+                    {"production-science-pack", 1},
+                    {"utility-science-pack", 2},
+                    {"space-science-pack", 2}
+                },
+                time = 60
+            },
+            upgrade = true,
+            order = "zzz"
         }
     }
 )
@@ -358,6 +418,60 @@ data:extend(
             name = "test-spaceship-v1-info-icon",
             filename = "__base__/graphics/icons/info.png",
             size = 33
+        }
+    }
+)
+
+data:extend(
+    {
+        {
+            type = "item",
+            name = "test-spaceship-v1-exterminate-biters",
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            icon_size = 128,
+            subgroup = "ammo",
+            order = "e[flamethrower]a",
+            stack_size = 1
+        },
+        {
+            type = "recipe",
+            name = "test-spaceship-v1-exterminate-biters",
+            energy_required = 60,
+            enabled = false,
+            category = "crafting",
+            ingredients = {
+                {"poison-capsule", 5000}
+            },
+            result = "test-spaceship-v1-exterminate-biters",
+            requester_paste_multiplier = 1
+        },
+        {
+            type = "technology",
+            name = "test-spaceship-v1-exterminate-biters",
+            icon_size = 128,
+            icon = "__base__/graphics/technology/demo/analyse-ship.png",
+            enabled = false,
+            effects = {
+                {
+                    type = "unlock-recipe",
+                    recipe = "test-spaceship-v1-exterminate-biters"
+                }
+            },
+            prerequisites = {},
+            unit = {
+                count = "25000",
+                ingredients = {
+                    {"automation-science-pack", 1},
+                    {"logistic-science-pack", 1},
+                    {"military-science-pack", 2},
+                    {"chemical-science-pack", 1},
+                    {"production-science-pack", 1},
+                    {"utility-science-pack", 1},
+                    {"space-science-pack", 1}
+                },
+                time = 60
+            },
+            order = "zzz"
         }
     }
 )
