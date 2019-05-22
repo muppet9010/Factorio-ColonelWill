@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 17.0.9
+Date: 2019-05-22
+  Features:
+  Changes:
+  Bugfixes:
+    - Investigate Spaceship Crash Cause - remove and re-create a missed gui on mod update
+    - Investigate Spaceship Crash Cause - fix Info gui button to work again
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 17.0.8
 Date: 2019-05-22
   Features:

@@ -4,6 +4,7 @@ local GUIUtil = require("utility/gui-util")
 function Gui.DestroyGui(player)
     GUIUtil.DestroyElementInPlayersReferenceStorage(player.index, "status", "frame")
     GUIUtil.DestroyElementInPlayersReferenceStorage(player.index, "welcome", "frame")
+    GUIUtil.DestroyElementInPlayersReferenceStorage(player.index, "firstStageDone", "frame")
     GUIUtil.DestroyElementInPlayersReferenceStorage(player.index, "won", "frame")
     GUIUtil.RemovePlayersReferenceStorage(player.index)
 end
@@ -84,6 +85,7 @@ end
 function Gui.ShowMessages(player)
     local id = player.index
     global.PlayersWelcomeClosed[id] = false
+    global.PlayersFirstStageDoneClosed[id] = false
     global.PlayersWonClosed[id] = false
 
     Gui.CreateWelcomePlayer(player)
@@ -93,7 +95,7 @@ end
 
 function Gui.CreateWelcomePlayer(player)
     local id = player.index
-    if (global.PlayersWelcomeClosed[id] == nil or global.PlayersWelcomeClosed[id] == true) and (GUIUtil.GetElementFromPlayersReferenceStorage(id, "welcome", "frame") == nil) then
+    if (global.PlayersWelcomeClosed[id] == nil or global.PlayersWelcomeClosed[id] == false) and (GUIUtil.GetElementFromPlayersReferenceStorage(id, "welcome", "frame") == nil) then
         global.PlayersWelcomeClosed[id] = false
         local frame = GUIUtil.AddElement({parent = player.gui.left, name = "welcome", type = "frame", direction = "vertical", style = "muppet_margin_frame"}, true)
         local message = GUIUtil.AddElement({parent = frame, name = "welcome", type = "label", caption = {"gui-caption.test-spaceship-v1-welcome"}}, false)
