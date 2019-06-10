@@ -1,5 +1,4 @@
 local Gui = {}
-local Constants = require("constants")
 
 function Gui.DestroyGui(player)
     local modGui = player.gui.left["colonelwill-gui-flow"]

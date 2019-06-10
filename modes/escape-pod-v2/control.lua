@@ -1,7 +1,6 @@
 local modeFilePath = "modes/escape-pod-v2"
 local Commands = require("utility/commands")
 local Utils = require("utility/utils")
-local Constants = require("constants")
 local Gui = require(modeFilePath .. "/gui.lua")
 local Logging = require("utility/logging")
 

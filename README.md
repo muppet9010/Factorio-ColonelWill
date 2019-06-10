@@ -3,6 +3,18 @@
 
 A mod for streamer ColonelWill's server. Includes a number of distinct modes which are not migratable.
 
+Chat Hunts Will
+=================
+
+- Tested with Factorio 0.17.47
+- Chat funds biters that will attack every 15-30 minutes or when over 200 biters, and hunt player "ColonelWill".
+- Biters at current evo level + 10%.
+- If the biters kill player ColonelWill the game is lost.
+- The biters will spawn at "enemy" force spawners near ColonelWill.
+- A gui shows next biter pack size and the funding amounts.
+- A command will reveal roughly when next attack is coming and another command will add biters to chats horde on the scale in the GUI.
+
+
 Investigate Spaceship Crash Cause
 ===================
 
