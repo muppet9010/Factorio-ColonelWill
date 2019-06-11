@@ -7,7 +7,7 @@ local debugLogging = false
 local targetPlayerName = "ColonelWill"
 local attackTimeRangeMinutes = {15, 30}
 
-local debugMode = true
+local debugMode = false
 if debugMode then
     targetPlayerName = "muppet9010"
     attackTimeRangeMinutes = {1, 1}
