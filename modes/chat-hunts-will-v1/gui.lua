@@ -1,6 +1,12 @@
 local Gui = {}
 local GuiUtil = require("utility/gui-util")
 
+function Gui.GuiRecreateAll()
+    for _, player in pairs(game.connected_players) do
+        Gui.GuiRecreate(player)
+    end
+end
+
 function Gui.GuiRecreate(player)
     Gui.DestroyGui(player)
     Gui.CreateGui(player)

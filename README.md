@@ -12,8 +12,8 @@ Chat Hunts Will
 - If one of chat's biters kills player "ColonelWill" the game is lost.
 - The biters will spawn at "enemy" force spawners near ColonelWill, but out of sight of all players
 - A gui shows current biter pack size, the funding amounts and the status of any active hunt.
-- The "add-biters [NUMBER] '[SUPPORTER NAME]'" command will add biters to chats horde.
-- The "attack-now" command will trigger the horde to attack.
+- The "/add-biters [NUMBER] '[SUPPORTER NAME]'" command will add biters to chats horde, i.e. /add-biters 534 "Muppet9010"
+- The "/attack-now" command will trigger the horde to attack.
 - The biter group will keep on chasing you, however it will stop and re-group. This is unavoidable it seems when chasing a moving target.
 
 

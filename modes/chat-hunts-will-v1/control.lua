@@ -66,7 +66,7 @@ local function OnStartup()
     Utils.DisableIntroMessage()
     CreateGlobals()
     OnLoad()
-    Gui.RefreshAll()
+    Gui.GuiRecreateAll()
 end
 
 local function On60Ticks(event)
