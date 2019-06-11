@@ -50,11 +50,14 @@ function Gui.RefreshPlayer(player)
             attackFrame.children[1].destroy()
         end
         if global.biterAttackStatus == "comming" then
-            GuiUtil.AddElement({parent = attackFrame, name = "colonelwill-attack-status", type = "label", caption = "colonelwill-chat-hunts-will-v1-attack-comming-label", style = "muppet_large_bold_text"})
+            local statusElm = GuiUtil.AddElement({parent = attackFrame, name = "colonelwill-attack-status", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-attack-comming-label", global.biterCurrentAttackCurrentSize}, style = "muppet_large_bold_text"})
+            statusElm.style.font_color = {r = 1, g = 0.5, b = 0.5, a = 1}
         elseif global.biterAttackStatus == "will-won" then
-            GuiUtil.AddElement({parent = attackFrame, name = "colonelwill-attack-status", type = "label", caption = "colonelwill-chat-hunts-will-v1-attack-will-won-label", style = "muppet_large_bold_text"})
+            local statusElm = GuiUtil.AddElement({parent = attackFrame, name = "colonelwill-attack-status", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-attack-will-won-label", global.biterCurrentAttackStartingSize}, style = "muppet_large_bold_text"})
+            statusElm.style.font_color = {r = 0.09, g = 0.7, b = 0, a = 1}
         elseif global.biterAttackStatus == "will-lost" then
-            GuiUtil.AddElement({parent = attackFrame, name = "colonelwill-attack-status", type = "label", caption = "colonelwill-chat-hunts-will-v1-attack-will-lost-label", style = "muppet_large_bold_text"})
+            local statusElm = GuiUtil.AddElement({parent = attackFrame, name = "colonelwill-attack-status", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-attack-will-lost-label", global.biterCurrentAttackStartingSize}, style = "muppet_large_bold_text"})
+            statusElm.style.font_color = {r = 1, g = 0, b = 0, a = 1}
         end
     end
 end

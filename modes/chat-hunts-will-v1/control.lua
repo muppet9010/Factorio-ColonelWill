@@ -1,9 +1,8 @@
 local modeFilePath = "modes/chat-hunts-will-v1"
-local Commands = require("utility/commands")
 local Utils = require("utility/utils")
 local GuiUtil = require("utility/gui-util")
 local Gui = require(modeFilePath .. "/gui.lua")
-local Logging = require("utility/logging")
+--local Logging = require("utility/logging")
 local Biters = require(modeFilePath .. "/biters.lua")
 
 if settings.startup["colonelwill_mode"].value ~= "chat-hunts-will-v1" then
@@ -36,19 +35,21 @@ local function OnPlayerJoinedGame(event)
     Gui.GuiRecreate(player)
 end
 
-local function OnPlayerLeftGame()
-    Gui.RefreshAll()
-end
-
 local function CreateGlobals()
-    Utils.DisableIntroMessage()
-    Utils.DisableWinOnRocket()
     global.gameFinished = global.gameFinished or false
     global.recruitedWorkforceCount = global.recruitedWorkforceCount or 0
     global.nextBiterAttackCount = global.nextBiterAttackCount or 0
     global.biterAttackStatus = global.biterAttackStatus or "none"
-    global.biterAttackUnits = global.biterAttackUnits or {}
     global.biterNests = global.biterNests or {}
+    global.biterCurrentAttackUnits = global.biterCurrentAttackUnits or {}
+    global.biterCurrentAttackUnitGroup = global.biterCurrentAttackUnitGroup or nil
+    global.biterCurrentAttackStartingSize = global.biterCurrentAttackStartingSize or 0
+    global.biterCurrentAttackCurrentSize = global.biterCurrentAttackCurrentSize or 0
+    global.biterCurrentAttackChunkPathTested = global.biterCurrentAttackChunkPathTested or {}
+    global.biterCurrentAttackChunkPathTestWaiting = global.biterCurrentAttackChunkPathTestWaiting or false
+    global.biterCurrentAttackChunkPosition = global.biterCurrentAttackChunkPosition or nil
+    global.biterCurrentAttackSurface = global.biterCurrentAttackSurface or nil
+    global.biterStatusUpdateTick = global.biterStatusUpdateTick or 0
     if global.nextBiterAttackTick == nil then
         global.nextBiterAttackTick = 0
         Biters.ScheduleNextAttack()
@@ -57,9 +58,12 @@ local function CreateGlobals()
 end
 
 local function OnLoad()
+    Biters.AddCommands()
+    Utils.DisableSiloScript()
 end
 
 local function OnStartup()
+    Utils.DisableIntroMessage()
     CreateGlobals()
     OnLoad()
     Gui.RefreshAll()
@@ -67,6 +71,8 @@ end
 
 local function On60Ticks(event)
     Biters.CheckBiterAttackTimer(event.tick)
+    Biters.MonitorStatus()
+    Gui.RefreshAll()
 end
 
 local function OnChunkGenerated(event)
@@ -77,14 +83,28 @@ local function OnEntityDied(event)
     Biters.OnEntityDied(event.entity)
 end
 
+local function OnBiterBaseBuilt(event)
+    Biters.OnBaseBuilt(event.entity)
+end
+
+local function OnScriptPathRequestFinished(event)
+    Biters.OnScriptPathRequestFinished(event)
+end
+
+local function OnPlayerDied(event)
+    Biters.OnPlayerDied(event)
+end
+
 script.on_init(OnStartup)
 script.on_load(OnLoad)
 script.on_configuration_changed(OnStartup)
 script.on_event(defines.events.on_rocket_launched, OnRocketLaunched)
 script.on_event(defines.events.on_research_finished, OnResearchFinished)
 script.on_event(defines.events.on_player_joined_game, OnPlayerJoinedGame)
-script.on_event(defines.events.on_player_left_game, OnPlayerLeftGame)
 script.on_nth_tick(60, On60Ticks)
 script.on_event(defines.events.on_chunk_generated, OnChunkGenerated)
 script.on_event(defines.events.on_entity_died, OnEntityDied)
 script.on_event(defines.events.script_raised_destroy, OnEntityDied)
+script.on_event(defines.events.on_biter_base_built, OnBiterBaseBuilt)
+script.on_event(defines.events.on_script_path_request_finished, OnScriptPathRequestFinished)
+script.on_event(defines.events.on_player_died, OnPlayerDied)

@@ -425,11 +425,11 @@ function Utils.DeepCopy(outerObject)
 end
 
 function Utils.DisableSiloScript()
-	--OnLoad
+    --OnLoad
     if remote.interfaces["silo_script"] == nil then
         return
     end
-    remote.call("silo_script", "set_no_victory", true)
+    Utils.DisableWinOnRocket()
     local items = remote.call("silo_script", "get_tracked_items")
     for itemName in pairs(items) do
         remote.call("silo_script", "remove_tracked_item", itemName)
@@ -437,7 +437,7 @@ function Utils.DisableSiloScript()
 end
 
 function Utils.DisableWinOnRocket()
-	--OnInit
+    --OnInit
     if remote.interfaces["silo_script"] == nil then
         return
     end
@@ -445,7 +445,7 @@ function Utils.DisableWinOnRocket()
 end
 
 function Utils.ClearSpawnRespawnItems()
-	--OnInit
+    --OnInit
     if remote.interfaces["freeplay"] == nil then
         return
     end
@@ -454,7 +454,7 @@ function Utils.ClearSpawnRespawnItems()
 end
 
 function Utils.SetStartingMapReveal(distance)
-	--OnInit
+    --OnInit
     if remote.interfaces["freeplay"] == nil then
         return
     end
@@ -462,7 +462,7 @@ function Utils.SetStartingMapReveal(distance)
 end
 
 function Utils.DisableIntroMessage()
-	--OnInit
+    --OnInit
     if remote.interfaces["freeplay"] == nil then
         return
     end
@@ -517,6 +517,12 @@ function Utils.LocalisedStringOfTime(inputTicks, displayLargestTimeUnit, display
     else
         error("unrecognised displayLargestTimeUnit argument in Utils.MakeLocalisedStringDisplayOfTime")
     end
+end
+
+function Utils.GetDistance(pos1, pos2)
+    local dx = pos1.x - pos2.x
+    local dy = pos1.y - pos2.y
+    return math.sqrt(dx * dx + dy * dy)
 end
 
 return Utils
