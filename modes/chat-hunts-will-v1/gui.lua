@@ -36,6 +36,8 @@ function Gui.CreateGui(player)
     GuiUtil.AddElement({parent = fundingFrame, name = "biter-funding-10", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-biter-funding-10-label"}, style = "muppet_bold_text"})
     GuiUtil.AddElement({parent = fundingFrame, name = "biter-funding-5", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-biter-funding-5-label"}, style = "muppet_bold_text"})
     GuiUtil.AddElement({parent = fundingFrame, name = "biter-funding-1", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-biter-funding-1-label"}, style = "muppet_bold_text"})
+    GuiUtil.AddElement({parent = fundingFrame, name = "biter-funding-follow", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-biter-funding-follow-label"}, style = "muppet_bold_text"})
+    GuiUtil.AddElement({parent = fundingFrame, name = "biter-funding-raid", type = "label", caption = {"gui-caption.colonelwill-chat-hunts-will-v1-biter-funding-raid-label"}, style = "muppet_bold_text"})
 
     Gui.RefreshPlayer(player)
 end

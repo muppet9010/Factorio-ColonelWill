@@ -17,8 +17,14 @@ local function GetChunkCenterForPosition(pos)
     return {x = (math.floor(pos.x / 32) * 32) + 16, y = (math.floor(pos.y / 32) * 32) + 16}
 end
 
-function Biters.ScheduleNextAttack()
-    global.nextBiterAttackTick = game.tick + math.random((attackTimeRangeMinutes[1] * 60 * 60), (attackTimeRangeMinutes[2] * 60 * 60))
+function Biters.ScheduleNextAttack(shortTime)
+    local delay
+    if shortTime then
+        delay = 1 * 60 * 60
+    else
+        delay = math.random((attackTimeRangeMinutes[1] * 60 * 60), (attackTimeRangeMinutes[2] * 60 * 60))
+    end
+    global.nextBiterAttackTick = game.tick + delay
     global.biterCurrentAttackChunkPathTested = {}
     global.biterCurrentAttackChunkPosition = nil
     global.biterCurrentAttackChunkPathTestWaiting = false
@@ -304,8 +310,8 @@ function Biters.StartPathTestToNextSuitableNestNearPosition(targetPos)
         end
     end
 
-    game.print("No reachable biter spawners on map, no biters can come")
-    Biters.ScheduleNextAttack()
+    game.print("No biter spawners that can reach ColonelWill on map, so no biters can come. Will retry soon.")
+    Biters.ScheduleNextAttack(true)
 end
 
 function Biters.OnScriptPathRequestFinished(event)
