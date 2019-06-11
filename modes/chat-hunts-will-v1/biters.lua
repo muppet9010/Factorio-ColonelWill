@@ -6,6 +6,7 @@ local Logging = require("utility/logging")
 local debugLogging = false
 local targetPlayerName = "ColonelWill"
 local attackTimeRangeMinutes = {15, 30}
+local biterStatusMessageViewSeconds = 60
 
 local debugMode = false
 if debugMode then
@@ -73,7 +74,7 @@ function Biters.MonitorStatus()
     if global.biterCurrentAttackCurrentSize == 0 then
         global.biterAttackStatus = "will-won"
         if global.biterStatusUpdateTick == 0 then
-            global.biterStatusUpdateTick = game.tick + 900
+            global.biterStatusUpdateTick = game.tick + (biterStatusMessageViewSeconds * 60)
         end
         return
     end
@@ -181,7 +182,6 @@ function Biters.OnSpawnerDied(entity)
         return
     end
     for i, spawner in pairs(nests.spawners) do
-        game.print(i .. " - " .. spawner.type)
         if spawner == entity then
             nests.spawners[i] = nil
             nests.count = nests.count - 1
@@ -214,7 +214,7 @@ function Biters.OnPlayerDied(event)
     for _, biter in pairs(global.biterCurrentAttackUnits) do
         if biter.valid and biter == causeEntity then
             global.biterAttackStatus = "will-lost"
-            global.biterStatusUpdateTick = game.tick + 900
+            global.biterStatusUpdateTick = game.tick + (biterStatusMessageViewSeconds * 60)
             global.gameFinished = true
             game.set_game_state {game_finished = true, player_won = false, can_continue = false, victorious_force = game.forces["enemy"]}
             return
@@ -270,7 +270,7 @@ function Biters.StartPathTestToNextSuitableNestNearPosition(targetPos)
             end
         end
         if not alreadyChecked then
-            local distance = Utils.GetDistance(targetPos, nests.position)
+            local distance = Utils.RoundNumberToDecimalPlaces(Utils.GetDistance(targetPos, nests.position), 0)
             if spawnerChunkDistances[distance] == nil then
                 spawnerChunkDistances[distance] = {nests}
             else
@@ -286,7 +286,7 @@ function Biters.StartPathTestToNextSuitableNestNearPosition(targetPos)
         end
     end
 
-    for _, nestsList in pairs(spawnerChunkDistances) do
+    for i, nestsList in pairs(spawnerChunkDistances) do
         local chunkCenterPos = nestsList[1].position
         local playerTooClose = false
         for _, playerPos in pairs(playerPositions) do

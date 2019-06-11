@@ -10,7 +10,7 @@ Chat Hunts Will
 - Chat funds biters that will attack every 15-30 minutes or when over 200 biters, and hunt player named "ColonelWill".
 - Biters at current evo level + 10%.
 - If one of chat's biters kills player "ColonelWill" the game is lost.
-- The biters will spawn at "enemy" force spawners near ColonelWill, but out of sight of all players
+- The biters will spawn at "enemy" force spawners near ColonelWill, but out of sight of all players.
 - A gui shows current biter pack size, the funding amounts and the status of any active hunt.
 - The "/add-biters [NUMBER] '[SUPPORTER NAME]'" command will add biters to chats horde, i.e. /add-biters 534 "Muppet9010"
 - The "/attack-now" command will trigger the horde to attack.
