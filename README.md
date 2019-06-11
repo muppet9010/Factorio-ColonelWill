@@ -14,6 +14,7 @@ Chat Hunts Will
 - A gui shows current biter pack size, the funding amounts and the status of any active hunt.
 - The "add-biters [NUMBER] '[SUPPORTER NAME]'" command will add biters to chats horde.
 - The "attack-now" command will trigger the horde to attack.
+- The biter group will keep on chasing you, however it will stop and re-group. This is unavoidable it seems when chasing a moving target.
 
 
 Investigate Spaceship Crash Cause
