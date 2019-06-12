@@ -162,9 +162,18 @@ function Biters.ChunkGenerated(surface, area)
     if #spawners == 0 then
         return
     end
+    local validSpawners = {}
+    for i, spawner in pairs(spawners) do
+        if Utils.IsPositionInBoundingBox(spawner.position, area, true) then
+            table.insert(validSpawners, spawner)
+        end
+    end
+    if #validSpawners == 0 then
+        return
+    end
     local chunkCenterPos = GetChunkCenterForPosition(area.left_top)
     local chunkCenterPosString = Utils.FormatPositionTableToString(chunkCenterPos)
-    global.biterNests[chunkCenterPosString] = {count = #spawners, spawners = spawners, position = chunkCenterPos}
+    global.biterNests[chunkCenterPosString] = {count = #validSpawners, spawners = validSpawners, position = chunkCenterPos}
 end
 
 function Biters.OnEntityDied(entity)
@@ -180,6 +189,7 @@ function Biters.OnSpawnerDied(entity)
     local chunkCenterPosString = Utils.FormatPositionTableToString(chunkCenterPos)
     local nests = global.biterNests[chunkCenterPosString]
     if nests == nil then
+        game.print("killed nest not found in list - something is wrong!")
         return
     end
     for i, spawner in pairs(nests.spawners) do

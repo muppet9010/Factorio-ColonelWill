@@ -525,4 +525,21 @@ function Utils.GetDistance(pos1, pos2)
     return math.sqrt(dx * dx + dy * dy)
 end
 
+function Utils.IsPositionInBoundingBox(position, boundingBox, safeTiling)
+    --safeTiling means that the boundingbox can be tiled without risk of an entity on the border being in 2 result sets, i.e. for use on each chunk.
+    if safeTiling == nil or not safeTiling then
+        if position.x >= boundingBox.left_top.x and position.x <= boundingBox.right_bottom.x and position.y >= boundingBox.left_top.y and position.y <= boundingBox.right_bottom.y then
+            return true
+        else
+            return false
+        end
+    else
+        if position.x > boundingBox.left_top.x and position.x <= boundingBox.right_bottom.x and position.y > boundingBox.left_top.y and position.y <= boundingBox.right_bottom.y then
+            return true
+        else
+            return false
+        end
+    end
+end
+
 return Utils
