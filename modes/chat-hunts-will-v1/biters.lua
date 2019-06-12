@@ -3,12 +3,12 @@ local Utils = require("utility/utils")
 local Commands = require("utility/commands")
 local Logging = require("utility/logging")
 
-local debugLogging = false
 local targetPlayerName = "ColonelWill"
 local attackTimeRangeMinutes = {15, 30}
-local biterStatusMessageViewSeconds = 60
+local biterStatusMessageViewTime = 15 * 60
 
-local debugMode = false
+local debugLogging = true
+local debugMode = true
 if debugMode then
     targetPlayerName = "muppet9010"
     attackTimeRangeMinutes = {1, 1}
@@ -19,6 +19,9 @@ local function GetChunkCenterForPosition(pos)
 end
 
 function Biters.ScheduleNextAttack(shortTime)
+    if debugMode then
+        game.print("TEST MODE ENABLED")
+    end
     local delay
     if shortTime then
         delay = 1 * 60 * 60
@@ -71,11 +74,9 @@ function Biters.MonitorStatus()
         global.biterAttackStatus = "none"
         return
     end
-    if global.biterCurrentAttackCurrentSize == 0 then
+    if global.biterCurrentAttackCurrentSize == 0 and global.biterAttackStatus == "comming" then
         global.biterAttackStatus = "will-won"
-        if global.biterStatusUpdateTick == 0 then
-            global.biterStatusUpdateTick = game.tick + (biterStatusMessageViewSeconds * 60)
-        end
+        global.biterStatusUpdateTick = game.tick + biterStatusMessageViewTime
         return
     end
     if global.biterCurrentAttackUnitGroup == nil or not global.biterCurrentAttackUnitGroup.valid then
@@ -203,6 +204,9 @@ function Biters.OnBiterDied(entity)
 end
 
 function Biters.OnPlayerDied(event)
+    if global.biterAttackStatus ~= "comming" then
+        return
+    end
     local player = game.get_player(event.player_index)
     if string.lower(player.name) ~= string.lower(targetPlayerName) then
         return
@@ -214,7 +218,7 @@ function Biters.OnPlayerDied(event)
     for _, biter in pairs(global.biterCurrentAttackUnits) do
         if biter.valid and biter == causeEntity then
             global.biterAttackStatus = "will-lost"
-            global.biterStatusUpdateTick = game.tick + (biterStatusMessageViewSeconds * 60)
+            global.biterStatusUpdateTick = game.tick + biterStatusMessageViewTime
             global.gameFinished = true
             game.set_game_state {game_finished = true, player_won = false, can_continue = false, victorious_force = game.forces["enemy"]}
             return
@@ -286,7 +290,7 @@ function Biters.StartPathTestToNextSuitableNestNearPosition(targetPos)
         end
     end
 
-    for i, nestsList in pairs(spawnerChunkDistances) do
+    for _, nestsList in pairs(spawnerChunkDistances) do
         local chunkCenterPos = nestsList[1].position
         local playerTooClose = false
         for _, playerPos in pairs(playerPositions) do

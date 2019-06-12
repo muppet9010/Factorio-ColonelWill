@@ -1,0 +1,24 @@
+Bugs:
+ - mod errored as a biter wasn't valid within Biters.AddCurrentBitersToCurrentUnitGroup() after 3 large groups sent and the first/second biters had sarted dieing. no error log and guess at function from my memory of console log.
+ - mod errors when some nests are killed - no error log - OnSpawnerDied() from Mojo reading console.
+ - double check that when nests are killed they are removed from the lists correctly. as looks like even when mod didn't error on nest killed, the spawn location wasn't removed.
+
+
+Changes:
+ - add way for people to close/open the funding panel.
+ - expand biter evo to handle values above 100.
+ - add total chat biters defeated score.
+ - support multiple groups concurrently being managed as they can't be trusted to path if left alone.
+ - support multiple groups numbers being concurrently tracked and GUI showing them.
+ - Change distraction on biter group as default get distracted too easily, but be careful to not ignore turrets???
+ - check each biter can make it to the group and script teleport them to the group if not. While the spawn group centre can path, each biters spawn spot may not be able to.
+ - If some are lost from the group due to combat but the group still exists they aren't reclaimed until the group disappears. Instead reclaim all biters in that wave group and re-add.
+
+
+Ideas:
+ - add current evo to display.
+ - distance adds a weighting to spawner likelyhood, not certainty.
+ - no chat biter group notification until one of the biters is killed. So no real streamer warning.
+ - split larger groups (over 200) up and spawn from different spawners
+ - biter groups should be more aggressive to tress in their way.
+ - chat chooses biter attack direction via message on actions
