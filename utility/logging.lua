@@ -8,6 +8,13 @@ function Logging.PositionToString(position)
     return "(" .. position.x .. ", " .. position.y .. ")"
 end
 
+function Logging.BoundingBoxToString(boundingBox)
+    if boundingBox == nil then
+        return "nil boundingBox"
+    end
+    return "((" .. boundingBox.left_top.x .. ", " .. boundingBox.left_top.y .. "), (" .. boundingBox.right_bottom.x .. ", " .. boundingBox.right_bottom.y .. "))"
+end
+
 function Logging.Log(text, enabled)
     if enabled ~= nil and not enabled then
         return

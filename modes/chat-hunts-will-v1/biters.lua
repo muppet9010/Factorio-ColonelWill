@@ -343,6 +343,7 @@ end
 function Biters.AddCommands()
     Commands.Register("add-biters", {"api-description.colonelwill-chat-hunts-will-v1-add-biters-command"}, Biters.AddBitersCommandHandle, true)
     Commands.Register("attack-now", {"api-description.colonelwill-chat-hunts-will-v1-attack-now-command"}, Biters.AttackNowCommandHandle, true)
+    Commands.Register("rescan-nests", "rescan biter nests to fix old mod version", Biters.ReScanBiterNests, true)
 end
 
 function Biters.AddBitersCommandHandle(command)
@@ -371,6 +372,15 @@ end
 
 function Biters.AttackNow()
     global.nextBiterAttackTick = game.tick
+end
+
+function Biters.ReScanBiterNests()
+    global.biterNests = {}
+    local surface = game.surfaces[1]
+    for chunk in surface.get_chunks() do
+        local area = {left_top = {x = (chunk.x * 32), y = (chunk.y * 32)}, right_bottom = {x = (chunk.x * 32) + 31, y = (chunk.y * 32) + 31}}
+        Biters.ChunkGenerated(surface, area)
+    end
 end
 
 return Biters
