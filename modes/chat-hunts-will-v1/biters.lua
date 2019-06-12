@@ -7,7 +7,7 @@ local targetPlayerName = "ColonelWill"
 local attackTimeRangeMinutes = {15, 30}
 local biterStatusMessageViewTime = 15 * 60
 
-local debugLogging = true
+local debugLogging = false
 local debugMode = true
 if debugMode then
     targetPlayerName = "muppet9010"
@@ -74,6 +74,9 @@ function Biters.MonitorStatus()
         global.biterAttackStatus = "none"
         return
     end
+    if global.biterAttackStatus == "will-won" or global.biterAttackStatus == "will-lost" then
+        return
+    end
     if global.biterCurrentAttackCurrentSize == 0 and global.biterAttackStatus == "comming" then
         global.biterAttackStatus = "will-won"
         global.biterStatusUpdateTick = game.tick + biterStatusMessageViewTime
@@ -103,8 +106,8 @@ function Biters.TidyUpAnyOldAttackGroup()
     global.biterCurrentAttackUnits = {}
 end
 
-function Biters.StartBiterAttack(targetPos)
-    Logging.LogPrint("starting biter attack at pos: " .. Logging.PositionToString(targetPos), debugLogging)
+function Biters.StartBiterAttack(spawnAreaPos)
+    Logging.LogPrint("starting biter attack at pos: " .. Logging.PositionToString(spawnAreaPos), debugLogging)
     global.biterAttackStatus = "comming"
 
     local surface = global.biterCurrentAttackSurface
@@ -113,7 +116,7 @@ function Biters.StartBiterAttack(targetPos)
     for i = 1, global.nextBiterAttackCount do
         local spawnerType = spawnerTypes[math.random(2)]
         local biterType = Utils.GetBiterType(global.modEnemyProbabilities, spawnerType, evolution)
-        local unitPos = surface.find_non_colliding_position(biterType, targetPos, 0, 1)
+        local unitPos = surface.find_non_colliding_position(biterType, spawnAreaPos, 0, 1)
         local biter = surface.create_entity {name = biterType, position = unitPos, force = game.forces["enemy"]}
         if not biter then
             game.print("creation of biter" .. i .. "failed")
@@ -124,6 +127,7 @@ function Biters.StartBiterAttack(targetPos)
     global.biterCurrentAttackStartingSize = #global.biterCurrentAttackUnits
     global.biterCurrentAttackCurrentSize = #global.biterCurrentAttackUnits
     global.nextBiterAttackCount = 0
+    global.biterCurrentAttackUnitGroup = nil
 end
 
 function Biters.AddCurrentBitersToCurrentUnitGroup()
@@ -381,6 +385,7 @@ function Biters.ReScanBiterNests()
         local area = {left_top = {x = (chunk.x * 32), y = (chunk.y * 32)}, right_bottom = {x = (chunk.x * 32) + 31, y = (chunk.y * 32) + 31}}
         Biters.ChunkGenerated(surface, area)
     end
+    game.print("all nests on the map rescanned")
 end
 
 return Biters
