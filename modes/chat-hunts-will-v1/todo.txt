@@ -1,0 +1,22 @@
+Bugs:
+
+
+Changes:
+ - add way for people to close/open the funding panel.
+ - expand biter evo to handle values above 100.
+ - add total chat biters defeated score.
+ - support multiple groups concurrently being managed as they can't be trusted to path if left alone.
+ - support multiple groups numbers being concurrently tracked and GUI showing them.
+ - Change distraction on biter group as default get distracted too easily, but be careful to not ignore turrets???
+ - check each biter can make it to the group and script teleport them to the group if not. While the spawn group centre can path, each biters spawn spot may not be able to.
+ - If some are lost from the group due to combat but the group still exists they aren't reclaimed until the group disappears. Instead reclaim all biters in that wave group and re-add.
+ - try different places within a chunk for pathing, as often a cliff/spawner in the centre of the chunk will make it fail unfairely.
+ - split larger groups (over 200) up and spawn from different spawners to avoid terrain navigaton issues
+ - distance adds a weighting to spawner likelyhood, not certainty.
+
+
+Ideas:
+ - add current evo to display.
+ - no chat biter group notification until one of the biters is killed in that group. So less obvious stream warning.
+ - biter groups should be more aggressive to tress in their way.
+ - chat chooses biter attack direction via message on actions

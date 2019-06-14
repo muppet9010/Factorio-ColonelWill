@@ -3,6 +3,7 @@
 
 A mod for streamer ColonelWill's server. Includes a number of distinct modes which are not migratable.
 
+
 Investigate Spaceship Crash Cause
 ===================
 
@@ -29,6 +30,21 @@ Escape Pod v2
 
 Legacy Mode Versions
 ============
+
+Chat Hunts Will (POC)
+--------------
+
+- Tested with Factorio 0.17.48
+- This concept doesn't handle multiple biter groups or large groups (over 200) well. See the ToDo.txt in the mode's folder.
+- Chat funds biters that will attack every 15-30 minutes or when over 200 biters, and hunt player named "ColonelWill".
+- Biters at current evo level + 10%.
+- If one of chat's current biters kills player "ColonelWill" the game is lost.
+- The biters will spawn at "enemy" force spawners near ColonelWill, but out of sight of all players.
+- A gui shows current biter pack size, the funding amounts and the status of any active hunt.
+- The "/add-biters [NUMBER] '[SUPPORTER NAME]'" command will add biters to chats horde, i.e. /add-biters 534 "Muppet9010"
+- The "/attack-now" command will trigger the horde to attack.
+- Should a second chat biter group become active the first one will stop being managed or cared about and sent to attack spawn.
+- Advised to use Extra Biter Control or up the path finding UPS limit to avoid big biter group issues.
 
 Escape Pod v1
 -----------
