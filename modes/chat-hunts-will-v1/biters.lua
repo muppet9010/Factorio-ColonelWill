@@ -82,7 +82,7 @@ function Biters.MonitorStatus()
         global.biterStatusUpdateTick = game.tick + biterStatusMessageViewTime
         return
     end
-    if global.biterCurrentAttackUnitGroup == nil or not global.biterCurrentAttackUnitGroup.valid then
+    if global.biterCurrentAttackUnitGroup == nil or not global.biterCurrentAttackUnitGroup.valid or #global.biterCurrentAttackUnitGroup.members == 0 then
         Biters.AddCurrentBitersToCurrentUnitGroup()
     end
     if global.biterCurrentAttackUnitGroup == nil then
@@ -143,7 +143,11 @@ function Biters.AddCurrentBitersToCurrentUnitGroup()
     end
     global.biterCurrentAttackUnitGroup = aliveBiter.surface.create_unit_group {position = aliveBiter.position, force = game.forces["enemy"]}
     for _, biter in pairs(global.biterCurrentAttackUnits) do
-        global.biterCurrentAttackUnitGroup.add_member(biter)
+        if biter.valid then
+            global.biterCurrentAttackUnitGroup.add_member(biter)
+        else
+            Biters.OnBiterDied(biter)
+        end
     end
 end
 
@@ -210,9 +214,10 @@ end
 
 function Biters.OnBiterDied(entity)
     for i, biter in pairs(global.biterCurrentAttackUnits) do
-        if (not biter.valid) or (entity == biter) then
+        if entity == biter then
             global.biterCurrentAttackUnits[i] = nil
             global.biterCurrentAttackCurrentSize = global.biterCurrentAttackCurrentSize - 1
+            break
         end
     end
 end

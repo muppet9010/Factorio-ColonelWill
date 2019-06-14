@@ -340,7 +340,8 @@ function Utils.GetBiterType(modEnemyProbabilities, spawnerType, evolution)
     if modEnemyProbabilities[spawnerType] == nil then
         modEnemyProbabilities[spawnerType] = {}
     end
-    if modEnemyProbabilities[spawnerType].calculatedEvolution == nil or math.abs(modEnemyProbabilities[spawnerType].calculatedEvolution - evolution) > 0.001 then
+	evolution = Utils.RoundNumberToDecimalPlaces(evolution, 2)
+    if modEnemyProbabilities[spawnerType].calculatedEvolution == nil or modEnemyProbabilities[spawnerType].calculatedEvolution == evolution then
         modEnemyProbabilities[spawnerType].calculatedEvolution = evolution
         modEnemyProbabilities[spawnerType].probabilities = Utils._CalculateSpecificBiterSelectionProbabilities(spawnerType, evolution)
     end
